@@ -14,7 +14,7 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 	      title: 'webpack test',
-	      filename: 'home.[chunkHash:6].html'
+	      filename: 'home.html'
 	    }),
 	    new MiniCssExtractPlugin({
 	      filename: 'static/css/[name].[chunkHash:6].css'
@@ -24,8 +24,24 @@ module.exports = {
 		rules: [
 			{
 				test: /\.css$/i,
-				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+				use: [MiniCssExtractPlugin.loader, 'css-loader','postcss-loader'],
 			},
+			{
+				test: /\.less$/,
+				use: [MiniCssExtractPlugin.loader, 'css-loader','less-loader','postcss-loader'],
+			},
+			{
+		        test: /\.(png|jpe?g|gif)$/i,
+		        use: [
+		          {
+		            loader: 'file-loader',
+		            options: {
+			          name: 'static/images/[path][name].[ext]',
+			          publicPath: '/'
+			        },
+		          },
+		        ],
+		      },
 		],
 	},
 }
